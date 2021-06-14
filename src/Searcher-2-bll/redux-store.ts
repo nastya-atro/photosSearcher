@@ -1,13 +1,10 @@
 import { Action, applyMiddleware, combineReducers, createStore } from "redux";
 import thunkMiddleware, { ThunkAction } from "redux-thunk"
-import authReducer from "./AuthReducer";
 import searchReducer from "./SearchReducer";
 
 
 let rootReducer = combineReducers({
-    search: searchReducer,
-    auth: authReducer
-    
+    search: searchReducer,  
 })
 
 type RootReducerType = typeof rootReducer

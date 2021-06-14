@@ -31,3 +31,12 @@ export const orderBySelector=(state: AppStateType)=>{
 export const colorSelector=(state: AppStateType)=>{
     return state.search.colors
 }
+
+export const isAuthSelector=(state: AppStateType)=>{
+    return state.search.isAuth
+}
+
+export const tokenSelector=(state: AppStateType)=>{
+    return state.search.token
+}
+

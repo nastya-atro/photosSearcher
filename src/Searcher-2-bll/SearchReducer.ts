@@ -1,24 +1,35 @@
-import { searchApi } from "../Searcher-3-dal/api";
+import { api } from "../Searcher-3-dal/api";
 import { CommonActionsTypes, CommonThunkType } from "./redux-store";
 
-
-
 let initialState = {
-    photos: null as null | Array<ResultSearchType>,
+    token: null as null | string,
+    isAuth: false,
+    photos: [] as Array<ResultSearchType>,
     isLoading: false,
     query: '',
     totalPhotosCount: 0,
     pageSize: 10,
     currentPage: 1,
     orderBy: 'relevant' as OrderType,
-    colors: null as null | ColorsType
-
+    colors: null as null | ColorsType,
 }
 
 type InitialStateType = typeof initialState
 
 const searchReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
+        case "auth/AUTH_RECEIVED":
+            return {
+                ...state,
+                token: action.token,
+
+            }
+        case "auth/SET_IS_AUTH":
+            return {
+                ...state,
+                isAuth: action.isAuth,
+
+            }
         case "search/SET_QUERY":
             return {
                 ...state,
@@ -29,6 +40,8 @@ const searchReducer = (state: InitialStateType = initialState, action: ActionsTy
                 ...state,
                 photos: action.photos
             }
+
+
         case 'search/TOOGLE_IS_LOADING':
             {
                 return {
@@ -47,13 +60,35 @@ const searchReducer = (state: InitialStateType = initialState, action: ActionsTy
                     ...state, currentPage: action.currentPage
                 }
             }
+
+        case "search/CHANGE_LIKES_PHOTO":
+            {
+                return {
+                    ...state,
+                    photos: state.photos.map(photo => {
+                        if (photo.id === action.id) {
+                            photo.likes = action.likes
+                            photo.liked_by_user = action.isLiked
+                        }
+                        return photo
+                    })
+                }
+            }
+
+
         default:
             return state;
     }
 }
 
-const actionsSearch = {
-    photosReceived: (photos: null | Array<ResultSearchType>) => ({
+export const actions = {
+    authReceived: (token: null | string) => ({
+        type: 'auth/AUTH_RECEIVED', token
+    } as const),
+    isAuthChanged: (isAuth: boolean) => ({
+        type: 'auth/SET_IS_AUTH', isAuth
+    } as const),
+    photosReceived: (photos: Array<ResultSearchType>) => ({
         type: 'search/SET_PHOTOS', photos
     } as const),
     queryChanged: (query: string) => ({
@@ -68,33 +103,56 @@ const actionsSearch = {
     currentPageChanged: (currentPage: number) => ({
         type: 'searhc/SET_CURRNT_PAGE', currentPage
     } as const),
+    changeLikesPhoto: (id: string, likes: number, isLiked: boolean) => ({
+        type: 'search/CHANGE_LIKES_PHOTO', id, likes, isLiked
+    } as const),
 
 
 }
 
-type ActionsTypes = CommonActionsTypes<typeof actionsSearch>
+type ActionsTypes = CommonActionsTypes<typeof actions>
 type ThunkType = CommonThunkType<ActionsTypes>
 
 
-export const getSearchResult = (query: string, page:number, per_page:number, order_by: OrderType, color:null | ColorsType): ThunkType => {
+export const getSearchResult = (query: string, page: number, per_page: number, order_by: OrderType, color: null | ColorsType): ThunkType => {
     return async (dispatch) => {
-        actionsSearch.toogleIsLoading(true)
-        dispatch(actionsSearch.queryChanged(query))
-        dispatch(actionsSearch.currentPageChanged(page))
+        actions.toogleIsLoading(true)
+        dispatch(actions.queryChanged(query))
+        dispatch(actions.currentPageChanged(page))
 
-        let data = await searchApi.searchPhotos(query, page, per_page, order_by, color)
+        let data = await api.searchPhotos(query, page, per_page, order_by, color)
 
-        actionsSearch.toogleIsLoading(false)
-        dispatch(actionsSearch.photosReceived(data.results))
-        dispatch(actionsSearch.totalPhotosCountReceived(data.total))
+        actions.toogleIsLoading(false)
+        dispatch(actions.photosReceived(data.results))
+
+        dispatch(actions.totalPhotosCountReceived(data.total))
+    }
+}
+
+export const getLoginThunk = (code: string): ThunkType => {
+    return async (dispatch) => {
+
+        let result = await api.getAccessToken(code)
+        if (result.status === 200) {
+            dispatch(actions.authReceived(result.data.access_token))
+            dispatch(actions.isAuthChanged(true))
+        }
+
+        console.log(result)
+
+
     }
 }
 
 
 
+
 export default searchReducer;
 
-export type OrderType='relevant' | 'latest'
+
+
+
+export type OrderType = 'relevant' | 'latest'
 export type ColorsType = 'black_and_white' | 'black' | 'white' | 'yellow' | 'orange' | 'red' | 'purple' | 'magenta' | 'green' | 'teal' | 'blue'
 
 type ResultSearchType = {
