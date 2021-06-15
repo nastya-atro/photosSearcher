@@ -1,0 +1,43 @@
+input.inputSerch{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: rgba(131, 131, 131, 0.171);
+}
+
+.inputSerch_error{
+    text-align: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(216, 106, 106, 0.507)
+}
+
+.selectFormControls {
+    text-align: center;
+}
+
+.buttonSearch{
+    text-align: center;
+}
+
+.buttonSearch button{
+    width: 200px;
+    margin-top: 5px;
+}
+
+.grid_item_photo img{
+    width: auto;
+height: 200px;
+}
+
+.grid_item_photo img:hover{
+    transform: scale(1.2);
+}
+
+.like_area{
+    font-size: 15px;
+}
+
+.activeHeart{
+    color: rgba(255, 0, 0, 0.596);
+}

@@ -1,21 +1,19 @@
-import './App.css';
-import { BrowserRouter, Route  } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { Redirect, withRouter } from 'react-router';
 import { Provider } from "react-redux"
-import store from '../Searcher-2-bll/redux-store';
-import SearchPage from './SearchPage';
 import AuthCallback from './AuthCallback';
+import SearchPage from './../SearchPage/SearchPage';
+import store from '../../Searcher-2-bll/redux-store';
 
-const App:React.FC=()=> {
+const App: React.FC = () => {
   return (
-   <div>
-     <Route exact path='/' render={() => <Redirect to={"/sercher"} />} />
-     <Route path='/sercher' render={() => <SearchPage/>} />
-     <Route path='/authcallback' render={() => <AuthCallback/>} />
-   </div>
+    <div>
+      <Route exact path='/' render={() => <Redirect to={"/sercher"} />} />
+      <Route path='/sercher' render={() => <SearchPage />} />
+      <Route path='/authcallback' render={() => <AuthCallback />} />
+    </div>
   );
 }
-
 
 
 let AppC = withRouter(App)

@@ -8,7 +8,7 @@ let initialState = {
     isLoading: false,
     query: '',
     totalPhotosCount: 0,
-    pageSize: 10,
+    pageSize: 36,
     currentPage: 1,
     orderBy: 'relevant' as OrderType,
     colors: null as null | ColorsType,
@@ -131,16 +131,11 @@ export const getSearchResult = (query: string, page: number, per_page: number, o
 
 export const getLoginThunk = (code: string): ThunkType => {
     return async (dispatch) => {
-
         let result = await api.getAccessToken(code)
         if (result.status === 200) {
             dispatch(actions.authReceived(result.data.access_token))
             dispatch(actions.isAuthChanged(true))
         }
-
-        console.log(result)
-
-
     }
 }
 

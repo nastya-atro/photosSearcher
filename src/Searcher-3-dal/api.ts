@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { ColorsType, OrderType } from '../Searcher-2-bll/SearchReducer';
 
-const client_id = '-7Zizqlf3Gfd2aWnELKsllUey2-0cIwnZc60S7IKbjw'
-const client_secret = '6vSgY3FPGUOI4jKvg1FldeTP_eR-KHGiVB7ILALA_YA'
+const client_id = process.env.REACT_APP_WEATHER_API_KEY
+const client_secret = process.env.REACT_APP_WEATHER_CLIENT_SECRET
+
 const redirect_uri='http://localhost:3000/authcallback'
 const grant_type= 'authorization_code'
 
