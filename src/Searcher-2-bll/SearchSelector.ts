@@ -1,4 +1,5 @@
-import { AppStateType } from "./redux-store"
+import { AppStateType } from "./ReduxToolkit/redux"
+
 
 export const photosSelector=(state: AppStateType)=>{
     return state.search.photos

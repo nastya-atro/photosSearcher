@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ColorsType, getSearchResult, OrderType } from '../../Searcher-2-bll/SearchReducer';
+import { ColorsType, OrderType } from '../../Searcher-2-bll/SearchReducer';
 import SearchForm from './SearchForm'
 import PhotosResult from './PhotosResult';
 import { isLoadingSelector, totalPhotosCountSelector } from '../../Searcher-2-bll/SearchSelector';
 import { currentPageSelector, pageSizeSelector, isAuthSelector } from '../../Searcher-2-bll/SearchSelector';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button, AppBar, Toolbar, Typography , Container} from '@material-ui/core';
+import { getSearchResult } from '../../Searcher-2-bll/ReduxToolkit/reducer';
 
 
 const useStyles = makeStyles((theme: Theme) =>

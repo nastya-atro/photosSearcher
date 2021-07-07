@@ -3,7 +3,8 @@ import { Redirect, withRouter } from 'react-router';
 import { Provider } from "react-redux"
 import AuthCallback from './AuthCallback';
 import SearchPage from './../SearchPage/SearchPage';
-import store from '../../Searcher-2-bll/redux-store';
+import store from "../../Searcher-2-bll/ReduxToolkit/redux";
+
 
 const App: React.FC = () => {
   return (

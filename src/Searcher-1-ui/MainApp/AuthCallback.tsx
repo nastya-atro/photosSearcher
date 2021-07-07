@@ -2,7 +2,8 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { tokenSelector } from '../../Searcher-2-bll/SearchSelector';
-import { getLoginThunk } from '../../Searcher-2-bll/SearchReducer';
+import { getLoginThunk } from '../../Searcher-2-bll/ReduxToolkit/reducer';
+
 
 
 const AuthCallback = () => {

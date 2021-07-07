@@ -6,9 +6,10 @@ import cn from "classnames"
 import { Grid } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
-import { getSearchResult } from '../../Searcher-2-bll/SearchReducer';
-import { actions } from './../../Searcher-2-bll/SearchReducer';
+//import { getSearchResult } from '../../Searcher-2-bll/SearchReducer';
+//import { actions } from './../../Searcher-2-bll/SearchReducer';
 import Paginator from './../Paginator/Paginator';
+import { changeLikesPhoto, getSearchResult } from '../../Searcher-2-bll/ReduxToolkit/reducer';
 
 type PropsType = {
     pageSize: number
@@ -37,16 +38,23 @@ const PhotosResult: React.FC<PropsType> = ({ pageSize, totalPhotosCount, current
     })
 
     const onLikePhoto = (id: string) => {
+        
         instanse.post(`photos/${id}/like/`)
             .then(res => {
-                dispatch(actions.changeLikesPhoto(res.data.photo.id, res.data.photo.likes, res.data.photo.liked_by_user))
+                const id=res.data.photo.id;
+                const likes = res.data.photo.likes;
+                const liked_by_user =  res.data.photo.liked_by_user
+                dispatch(changeLikesPhoto({id, likes, liked_by_user}))
             })
     }
 
     const disLikePhoto = (id: string) => {
         instanse.delete(`photos/${id}/like/`)
             .then(res => {
-                dispatch(actions.changeLikesPhoto(res.data.photo.id, res.data.photo.likes, res.data.photo.liked_by_user))
+                const id=res.data.photo.id;
+                const likes = res.data.photo.likes;
+                const liked_by_user =  res.data.photo.liked_by_user
+                dispatch(changeLikesPhoto({id, likes, liked_by_user}))
             })
     }
 

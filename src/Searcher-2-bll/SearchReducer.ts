@@ -150,7 +150,7 @@ export default searchReducer;
 export type OrderType = 'relevant' | 'latest'
 export type ColorsType = 'black_and_white' | 'black' | 'white' | 'yellow' | 'orange' | 'red' | 'purple' | 'magenta' | 'green' | 'teal' | 'blue'
 
-type ResultSearchType = {
+export type ResultSearchType = {
     id: string,
     created_at: string,
     width: number,
